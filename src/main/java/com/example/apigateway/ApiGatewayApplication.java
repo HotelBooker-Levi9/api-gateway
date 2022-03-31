@@ -18,8 +18,6 @@ public class ApiGatewayApplication {
 		return builder.routes()
 					.route(r -> r.path("/clients/**")
 							.uri("http://localhost:8000/clients"))
-//					.route(r -> r.path("/drugiendpoint/**")
-//					.uri("urlzadrugimikroservis"))
 				.build();
 
 	}
