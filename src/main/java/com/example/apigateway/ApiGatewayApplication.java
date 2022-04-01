@@ -21,4 +21,15 @@ public class ApiGatewayApplication {
 						.build();
 	}
 
+	@Bean
+	public RouteLocator hotelServiceRoutes(RouteLocatorBuilder builder) {
+		return builder.routes()
+				.route(r -> r.path("/hotels/**")
+						.uri("http://localhost:8200/hotels"))
+				.route(r -> r.path("/cities/**")
+						.uri("http://localhost:8200/cities"))
+				.route(r -> r.path("/destinations/**")
+						.uri("http://localhost:8200/destinations"))
+				.build();
+	}
 }
