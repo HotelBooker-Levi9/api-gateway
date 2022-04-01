@@ -32,4 +32,16 @@ public class ApiGatewayApplication {
 						.uri("http://localhost:8200/destinations"))
 				.build();
 	}
+
+	@Bean
+	public RouteLocator cartServiceRoutes(RouteLocatorBuilder builder) {
+		return builder.routes()
+				.route(r -> r.path("/carts/**")
+						.uri("http://localhost:8100/carts"))
+				.route(r -> r.path("/reservations/**")
+						.uri("http://localhost:8100/reservations"))
+				.route(r -> r.path("/invoices/**")
+						.uri("http://localhost:8100/invoices"))
+				.build();
+	}
 }
