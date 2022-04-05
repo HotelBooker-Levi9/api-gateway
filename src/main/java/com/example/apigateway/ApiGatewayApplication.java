@@ -21,4 +21,35 @@ public class ApiGatewayApplication {
 						.build();
 	}
 
+	@Bean
+	public RouteLocator hotelServiceRoutes(RouteLocatorBuilder builder) {
+		return builder.routes()
+				.route(r -> r.path("/hotels/**")
+						.uri("http://localhost:8200/hotels"))
+				.route(r -> r.path("/cities/**")
+						.uri("http://localhost:8200/cities"))
+				.route(r -> r.path("/destinations/**")
+						.uri("http://localhost:8200/destinations"))
+				.build();
+	}
+
+	@Bean
+	public RouteLocator cartServiceRoutes(RouteLocatorBuilder builder) {
+		return builder.routes()
+				.route(r -> r.path("/carts/**")
+						.uri("http://localhost:8100/carts"))
+				.route(r -> r.path("/reservations/**")
+						.uri("http://localhost:8100/reservations"))
+				.route(r -> r.path("/invoices/**")
+						.uri("http://localhost:8100/invoices"))
+				.build();
+	}
+
+	@Bean
+	public RouteLocator emailServiceRoutes(RouteLocatorBuilder builder) {
+		return builder.routes()
+				.route(r -> r.path("/email/**")
+						.uri("http://localhost:8300/sendConfirmationMail"))
+				.build();
+	}
 }
