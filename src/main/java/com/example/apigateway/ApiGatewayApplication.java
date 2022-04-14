@@ -17,7 +17,7 @@ public class ApiGatewayApplication {
 	public RouteLocator userServiceRoutes(RouteLocatorBuilder builder) {
 		return builder.routes()
 				.route(r -> r.path("/clients/**")
-						.uri("http://localhost:8000/clients"))
+						.uri("http://localhost:9000/clients"))
 						.build();
 	}
 
