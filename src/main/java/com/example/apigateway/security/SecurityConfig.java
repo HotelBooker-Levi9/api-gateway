@@ -2,6 +2,7 @@ package com.example.apigateway.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -17,11 +18,29 @@ public class SecurityConfig {
     @Autowired
     private ReactiveClientRegistrationRepository clientRegistrationRepository;
 
+    private static final String[] PROTECTED_URLS_PUT = {
+            "/hotels/*",
+            "/cities*",
+            "/cities/*",
+            "/destinations*",
+            "/destinations/*",
+    };
+
+    private static final String[] PROTECTED_URLS_POST = {
+            "/hotels/addHotel",
+            "/cities/addCity",
+            "/destinations/addDestination",
+    };
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http.cors().and().csrf().disable().authorizeExchange()
-                .pathMatchers("/hotels/**", "/clients/register").permitAll()
-                .pathMatchers("/api/**").authenticated().and()
+                .pathMatchers("/auth/**").permitAll()
+                .pathMatchers(HttpMethod.GET,"/hotels/*", "/cities/*", "/destinations/*", "/reservations/**").permitAll()
+                .pathMatchers("/*", "/clients/**", "/carts/**", "/email/**").authenticated()
+                .pathMatchers(HttpMethod.PUT, PROTECTED_URLS_PUT).authenticated()
+                .pathMatchers(HttpMethod.POST, PROTECTED_URLS_POST).authenticated()
+                .and()
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationRequestResolver(
                                 authorizationRequestResolver(this.clientRegistrationRepository)

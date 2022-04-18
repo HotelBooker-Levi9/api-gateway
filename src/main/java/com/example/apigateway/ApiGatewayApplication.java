@@ -20,6 +20,8 @@ public class ApiGatewayApplication {
 		return builder.routes()
 				.route(r -> r.path("/clients/**")
 						.uri("http://localhost:9000/clients"))
+				.route(r -> r.path("/auth/**")
+						.uri("http://localhost:9000/auth"))
 						.build();
 	}
 
