@@ -19,14 +19,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        http
-                .authorizeExchange(authorize -> authorize
-                        .anyExchange().authenticated()
-                )
+        http.cors().and().csrf().disable().authorizeExchange()
+                .pathMatchers("/hotels/**", "/clients/register").permitAll()
+                .pathMatchers("/api/**").authenticated().and()
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationRequestResolver(
                                 authorizationRequestResolver(this.clientRegistrationRepository)
-                        )
+                        ).and().formLogin().loginPage("/oauth2/authorization/api-client-oidc")
                 )
                 .oauth2Client(Customizer.withDefaults());
         return http.build();
