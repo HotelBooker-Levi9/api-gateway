@@ -29,6 +29,7 @@ public class WebClientConfig {
         ReactiveOAuth2AuthorizedClientProvider authorizedClientProvider =
                 ReactiveOAuth2AuthorizedClientProviderBuilder.builder()
                         .authorizationCode()
+                        .password()
                         .refreshToken()
                         .build();
         DefaultReactiveOAuth2AuthorizedClientManager authorizedClientManager =

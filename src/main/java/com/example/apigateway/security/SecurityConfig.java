@@ -35,7 +35,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http.cors().and().csrf().disable().authorizeExchange()
-                .pathMatchers("/auth/**").permitAll()
+                .pathMatchers("/auth/**", "/oauth2/**").permitAll()
                 .pathMatchers(HttpMethod.GET,"/hotels/*", "/cities/*", "/destinations/*", "/reservations/**").permitAll()
                 .pathMatchers("/*", "/clients/**", "/carts/**", "/email/**").authenticated()
                 .pathMatchers(HttpMethod.PUT, PROTECTED_URLS_PUT).authenticated()
