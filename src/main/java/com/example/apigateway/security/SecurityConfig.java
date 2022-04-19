@@ -26,6 +26,13 @@ public class SecurityConfig {
             "/destinations/*",
     };
 
+    private static final String[] UNPROTECTED_URLS_POST = {
+            "/carts/unavailableHotelIdsForDateRange*",
+            "/hotels/priceForReservation",
+            "/email/sendConfirmationMail"
+
+    };
+
     private static final String[] PROTECTED_URLS_POST = {
             "/hotels/addHotel",
             "/cities/addCity",
@@ -35,9 +42,11 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http.cors().and().csrf().disable().authorizeExchange()
-                .pathMatchers("/auth/**", "/oauth2/**").permitAll()
-                .pathMatchers(HttpMethod.GET,"/hotels/*", "/cities/*", "/destinations/*", "/reservations/**").permitAll()
-                .pathMatchers("/*", "/clients/**", "/carts/**", "/email/**").authenticated()
+                .pathMatchers("/auth/**", "/oauth2/**", "/login").permitAll()
+                .pathMatchers(HttpMethod.GET,"/hotels/**", "/cities/*", "/destinations/*", "/reservations/**", "/hello").permitAll()
+                .pathMatchers(HttpMethod.POST,UNPROTECTED_URLS_POST).permitAll()
+                .pathMatchers("/*", "/clients/**", "/email/**").authenticated()
+                .pathMatchers(HttpMethod.GET, "/carts/*").authenticated()
                 .pathMatchers(HttpMethod.PUT, PROTECTED_URLS_PUT).authenticated()
                 .pathMatchers(HttpMethod.POST, PROTECTED_URLS_POST).authenticated()
                 .and()
