@@ -43,7 +43,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http.cors().and().csrf().disable().authorizeExchange()
                 .pathMatchers("/auth/**", "/oauth2/**", "/login").permitAll()
-                .pathMatchers(HttpMethod.GET,"/hotels/**", "/cities/*", "/destinations/*", "/reservations/**", "/hello").permitAll()
+                .pathMatchers(HttpMethod.GET,"/hotels/**", "/cities/*", "/destinations/*", "/reservations/**").permitAll()
                 .pathMatchers(HttpMethod.POST,UNPROTECTED_URLS_POST).permitAll()
                 .pathMatchers("/*", "/clients/**", "/email/**").authenticated()
                 .pathMatchers(HttpMethod.GET, "/carts/*").authenticated()
