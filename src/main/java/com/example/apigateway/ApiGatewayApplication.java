@@ -39,9 +39,9 @@ public class ApiGatewayApplication {
 		return builder.routes()
 				.route(r -> r.path("/hotels/**")
 						.uri(hotelUrl + "hotels"))
-				.route(r -> r.path("cities/**")
+				.route(r -> r.path("/cities/**")
 						.uri(hotelUrl+"cities"))
-				.route(r -> r.path("destinations/**")
+				.route(r -> r.path("/destinations/**")
 						.uri(hotelUrl+"destinations"))
 				.build();
 	}
